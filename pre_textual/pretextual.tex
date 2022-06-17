@@ -1,0 +1,90 @@
+% Os elementos a seguir aparecerão antes do início do artigo em si.
+
+% Espaçamento de 1,5cm por linha
+\OnehalfSpacing
+
+% Capa
+\imprimircapa
+
+% Folha de rosto
+\imprimirfolhaderosto
+
+% Folha de aprovação
+% COMANDO EXCLUSIVO DA ABNTEX2UNIFEI.
+\imprimirfolhadeaprovacao{Trabalho de Conclusão de Curso apresentado à Universidade Federal de Itajubá como requisito para obtenção do grau de bacharel em Física.}
+
+
+% Espaço reservado a dedicatórias
+\begin{dedicatoria}
+\null
+\vfill
+Dedico este trabalho aos meus colegas de curso, que assim como eu encerram uma difícil etapa da vida acadêmica.
+\end{dedicatoria}
+
+
+% Agradecimentos
+\begin{agradecimentos}[Agradecimentos]
+Agradeço imensamente aos meus professores em especifico ao meu orientador Hektor, sem o apoio do mesmo não conseguiria trilhar o caminho até aqui, agradeço aos meus colegas que compartilharam suas dificuldades e conquistas, por ultimo e mais importantes aos meus pais que mesmo sabendo das dificuldades do caminho que escolhi me apoiaram.
+\end{agradecimentos}
+
+% Epígrafe
+\begin{epigrafe}
+\null
+\vfill \textit{“ Houve um tempo em que o homem enfrentou o universo sozinho e sem amigos. Agora ele tem criaturas para ajudá-lo; criaturas mais fortes que ele próprio, mais fiéis, mais úteis e totalmente devotadas a ele. A humanidade não está mais sozinha. ” }
+\begin{flushright}
+\textit{Isaac Asimov}
+\end{flushright}
+\end{epigrafe}
+
+
+
+% Resumo
+\input{pre_textual/resumo.tex}
+
+
+% Lista de Figuras
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+
+% Lista de Tabelas
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+
+% Lista de Abreviaturas e Siglas
+\begin{siglas}
+  \item[SDSS] Sloan Digital Sky Survey
+  
+  \item[RC3] Third Reference Catalogue of Bright Galaxies
+  \item[VC] Visão Computacional
+  \item[HOG] Histogram of Oriented Gradients 
+  \item[HM] Hu Moments 
+  \item[ML] Machine Learning
+  \item[AM] Aprendizado de Máquina
+  \item[TB] Tera Bytes
+  \item[NB] Naive Bayes
+  \item[LR] Logistic Regression
+  \item[LDA] Linear Discriminant Analysis
+  \item[K-NN] K-Nearest Neighbors 
+  \item[SVM] Support Vector Machine 
+  \item[DT] Decision Tree 
+  \item[RF] Randon Forest 
+  \item[MLP] Multilayer Perceptron 
+  \item[GZ] Galaxy Zoo 
+\end{siglas}
+
+% Lista de Símbolos
+\begin{simbolos}
+  \item[$ \Gamma $] Letra grega Gama
+  \item[$ \Lambda $] Lambda
+  \item[$ \zeta $] Letra grega minúscula zeta
+  \item[$ \in $] Pertence
+  \item[O(n)] Ordem de um algoritmo
+  \item[©] Copyright
+\end{simbolos}
+
+% Sumário
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage

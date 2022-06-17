@@ -1,0 +1,60 @@
+% Definições do documento
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	%openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	%twoside,			% para impressão em verso e anverso. Oposto a oneside
+	oneside,	
+	a4paper,			% tamanho do papel
+	% -- opções da classe abntex2 --
+	chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	hyphens,            % Hífens nos links
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+	]{abntex2}
+
+
+% Configuração geral
+\include{config}
+
+
+% Compila o indice
+\makeindex
+
+\begin{document}
+
+	% Elementos pré-textuais
+	\pretextual
+	\include{pre_textual/pretextual}
+
+	% Elementos textuais
+	\textual
+	
+	% Inclui fontes não-citadas nas referências,
+	% apenas para que apareçam como exemplo.
+	
+	% Introdução
+	\include{capitulos/1-introducao}
+
+	% Metodologia
+	\include{capitulos/2-metodologia}
+	
+	% Projetos
+	\include{capitulos/3-GalaxyZoo}
+	\include{capitulos/4-RC3}
+	
+	% Conclusão
+	\include{capitulos/5-consideracoesfinais}
+
+	% Elementos pós-textuais
+	\postextual
+	\include{por_textual/postextual}
+	
+	% Referências bibliográficas
+	\bibliography{refs}
+
+
+\end{document}

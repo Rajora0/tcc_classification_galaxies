@@ -1,0 +1,70 @@
+\chapter{Metodologia} 
+
+O nosso trabalho consiste em criar um modelo de AM capaz de classificar ou rotular uma imagem em sua respectiva classe com a ajuda de recursos aprendidos de centenas de imagens, para isso devemos seguir passos básicos a todos modelos de AM como: a coleta de dados, a preparação dos dados, a escolha do modelo, o treinamento, a avaliação do modelo e por fim testar o quão preditivo é o nosso modelo.  
+
+Neste capítulo vamos trazer os passos seguidos na construção do modelo de AM que serão empregados para ambos os conjuntos de dados que serão utilizados Galaxy Zoo (GZ) e DSS-RC3 , desde a coleta de dados até uma análise dos modelos e uma comparação entre os mesmo, e por fim vamos usar o modelo que melhor desempenhou e fazer uma análise estatística da predição deste modelo. Inicialmente vamos descrever os passos seguido na construção do processo de aprendizado e ao final vamos aplicar esses passos nos nossos conjuntos de dados. 
+
+Podemos ressalvar que são dois processos distintos o aplicado ao GZ é mais simples e aconteceu em um momento posterior ao início  da pesquisa onde já havia um certo conhecimento da montagem de um dataset \footnote{Vamos introduzir a ideia de "dataset", de forma simples se trata de uma coleção de dados normalmente tabulado, onde cada elemento (ou indivíduo) tem várias características. Cada coluna representa uma variável particular. Cada linha corresponde a um determinado membro do conjunto de dados em questão. Cada valor é conhecido como um dado. O conjunto de dados pode incluir dados para um ou mais membros, correspondente ao número de linhas.} e das técnicas de AM. O processo dos dados do DSS-RC3 pode ser classificado como o real processo de montagem de um conjunto de dados para aplicação de técnicas de AM, ele não foi linear, em diversos momentos, tivemos que fazer uma nova coleta das imagens com parâmetros diferentes, o treino deste dataset aconteceu bem depois de termos o montado inicialmente a ideia era utilizar de técnicas de aprendizado profundo, mas optamos pelo AM por ser mais simples e por apresentar um aprendizado mais profundo do assunto aqui tratado. 
+
+\section{Coleta de dados} 
+
+Em 1609 todas as observações astronômicas eram feitas a olho nu, foi nesse ano que Galileu Galilei, tendo ouvido falar sobre um instrumento capaz de aproximar as imagens, construiu uma luneta, e pela primeira vez, o homem pode ver o céu de mais perto e assim a observação evoluiu até onde estamos no presente momento, o cenário não e mais tão simples hoje temos a nossa mão uma infinidade de observações e que geram dados na casa dos TB, e grande parte deste dados estão disponíveis abertamente para qualquer pessoa com acesso à internet.  
+
+A facilidade de coleta muitas vezes é um problema pois se torna difícil escolher um bom conjunto de dados, em ML é de extrema importância esta coleta com foco no que se necessita para executar um bom aprendizado. Nosso objetivo foi procurar um conjunto de dados oficiais de imagens de galáxias que possibilitasse uma classificação morfológica.  
+
+É importante dizer que teremos duas abordagens nesse item uma que irá tratar dos dados do GZ que já estão separados e que nos resta explicar a separação e dizer como foram utilizadas as imagens, a segunda abordagem será para os dados do RC3, que demandou um processo típico de montagem de um dataset, desde o processo de coletar até a parte de amostragem da imagens. 
+
+\section{Preparação dos dados} 
+
+A preparação de dados para treinamento do modelo de AM leva em conta diversas metodologias desde separações simples até modelos estatísticas de amostragem, o modelo mais simples leva em conta a divisão disponibilizada pelo próprio conjunto de dados. Com esses dados já divididos temos que extrair os recursos, que são as informações ou lista de números extraídos de uma imagem. Existem diversos algoritmos de extração de recursos vamos usar aqueles que descrevemos na seção \ref{vc}. 
+
+\subsection{Extração de recursos}
+
+Quando decidimos as características que podemos usar para quantificar imagens de galáxias, podemos pensar, em forma e luminosidade como as principais. Esta é uma escolha óbvia para quantificar globalmente e representar a imagem de uma galáxia. Mas quando desejamos classifica-las encontramos uma certa dificuldade, o grande problema é que mesmo para um profissional treinado algumas galáxias apresentam uma classificação dúbia.  
+
+Uma abordagem que pode produzir bons resultados, é a escolha de vários atributos descritivos de característica, já que algumas galáxias apresentam muito em comum. Portanto, precisamos quantificar a imagem combinando diferentes descritores de recursos para que ela descreva a imagem de forma mais eficaz. 
+
+\subsection{Concatenação do descritor global}
+
+Existem duas classes de descritores os globais e os locais \cite{Sonka1998}. Os globais são descritores de recursos que quantificam uma imagem globalmente. Eles não possuem o conceito de pontos de interesse e, portanto, levam toda a imagem para processamento. Os descritores locais quantificam as regiões locais de uma imagem, os pontos de interesse são determinados em toda a imagem e os fragmentos da imagem ao redor desses pontos de interesse são considerados para análise. 
+
+Os vetores de recursos globais, podem ser apenas concatenados de formas simples onde cada vetor de recurso formar um único vetor que finalmente e concatenado em único descritor global. Vamos usar essa abordagem, para os vetores de recursos locais, bem como combinações de vetores de recursos globais e locais, iriamos precisar de algo chamado Bag of Visual Words (BOVW), que foi estudado, mas percebemos ser inviável para o nosso caso por isso não será implementado. 
+
+\section{Escolha do modelo} 
+
+ Os modelos escolhidos foram os citados na seção (\ref{ml}), agora necessitamos analisar o desempenho da classificação de cada modelo e procurar entender a diferença geral da qualidade no aprendizado esse é um aspecto muito importante para que tenhamos um modelo de AM realmente capaz de executar nossa tarefa de predição. Como já temos um descritor global criado no passo anterior podemos apenas utiliza-lo para treinar rapidamente os modelos e fazer análise comparativa inicial. 
+
+ Para este passo precisamos criar nossos modelos de AM neste ponto contamos com o Scikit-learn (SL). O SL é uma biblioteca de aprendizado de máquina de código aberto que oferece suporte ao aprendizado supervisionado e não supervisionado \cite{scikit-learn}. Ele também fornece várias ferramentas para ajuste de modelo, pré-processamento de dados, seleção e avaliação de modelo e muitos outros utilitários, grande parte do estudo aqui apresentado vai utilizar da biblioteca SL. 
+
+Uma observação importante é que todos os modelos escolhidos se apresentam implementados na biblioteca do SL. Uma breve descrição sobre os mesmos foi feita na introdução. Para entender melhor esses algoritmos vide a fonte didática utilizada \footnote{\citeonline{astroml}, \citeonline{astroml2} e \citeonline{datascience}}. Usaremos também a funções fornecida pela SL para dividir nosso conjunto de dados de treinamento dados de treino e dados de teste. Desta forma, treinamos os modelos com dados de treino e testamos o modelo treinado com os dados de teste, ou seja, dados não visto anteriormente. O tamanho da divisão é decidido pelo parâmetro que devemos definir, essa divisão leva em conta muito do queremos para nosso modelo e da disponibilidade inicial do conjunto de dados. 
+
+\section{Treinamento} 
+
+ O treinamento acontece após toda a montagem do nosso dataset onde já extraímos, concatenamos e salvamos recursos globais e rótulos de nosso conjunto de dados de treinamento. Precisamos agora criar nossos modelos de AM, nestes pontos contamos com a ajuda do SL os modelos escolhidos estão na seção (\ref{ml}). O entendimento completo destes algoritmos ficaria fora do escopo deste trabalho visto que poderíamos desenvolver um projeto de pesquisa sobre apenas um modelo. A ideia por traz de trazer vários modelos é procurar aprender como os mesmo e ver aquele que apresenta um melhor desempenho com o nosso tipo de dado. 
+
+Utilizamos também do SL para dividir nosso conjunto de dados de treinamento em dois tipos de conjuntos, teste e treino. Assim, treinamos os modelos com treino e testamos o modelo treinado com teste que não foi visto anteriormente. O tamanho da divisão é decidido por um parâmetro previamente escolhido, na literatura \cite{astroml2} vemos em diversos momento uma divisão de 80\% para treino e 20\% teste a empregada aqui será está. 
+
+\subsection{Analise de comparação entre os modelos}
+
+Aplicamos também técnicas de K-Fold Cross Validation, que são utilizadas na validação de modelos. Em resumo, se escolhermos K = 10, dividimos todos os dados em 9 partes para treinamento e uma parte para teste exclusivamente em cada rodada, este processo acontece em cada época de treino até o mesmo ser completado. Para entender mais sobre isso, recomendo uma leitura rápida no artigo \citeonline{VanwinckelenGitte2012Oema}. 
+
+Após importar todos os modelos do SL treinamos com nossos recursos armazenados. O dataset está salvo localmente e apresenta um formato de arquivo .h5 que é um conjunto de formatos de arquivos e bibliotecas criadas para organização e armazenamento de grandes quantidades de dados numéricos, é uma boa opção pois podemos utilizar esse mesmo dataset em outros projetos. O tempo treino leva em conta diversos parâmetros desde os mais lógicos como o tamanho do dataset até ajustes mais refinados \cite{astroml}. 
+
+\section{Avaliação} 
+
+O passo mais importante de um modelo de AM é a construção do dataset e em segundo lugar podemos colocar a avaliação, neste aspecto é um momento decisivo para saber se o nosso modelo apresentou desempenho desejado, neste ponto e onde temos que decidir mexer nos passos anteriores ou não, para isso treinamos cada um dos modelos de AM que escolhemos e verificamos os resultados da validação cruzada (K-Folds), os dados utilizados para essa comparação serão apenas os dados de treino. 
+
+Após a avaliação inicial de todos os modelos precisamos escolher aquele que apresentou o melhor desempenho e aplicar outros testes para verificar sua eficiência. Podemos fazer alguns comentários sobre o que esperamos das técnicas e sobre suas precisões, mas o aspecto mais importante neste ponto e o tamanho da amostra que mostra que nem sempre uma amostra maior vai apresentar melhores resultados. Precisamos de grandes quantidades de dados para obter melhor precisão, mas devemos notar a qualidade desses dados e a precisão dos mesmos. 
+
+Um ponto importante nos testes de AM é o teste de pequenos conjuntos de dados, isso nos dá uma ideia geral de correções pequenas ou grandes que devemos executar no nossos dados ou processos de treino, também evita o excesso no tempo de execução de treinamento, algo desejável quando temos uma grande amostra que facilmente pode levar horas ou dias pra executar um ciclo de treino, ao longo deste trabalho não tivemos que utilizar uma máquina com potencial computacional muito alta mas alguns treinos levaram horas. 
+
+\section{Aprimoramento dos parâmetros}
+
+O aprimoramento de parâmetros visa melhorar a qualidade e a eficiência do modelo de AM, essa etapa é importante para identificar valores que afetam diretamente a acurácia do modelo e o tempo de treinamento necessário. Os principais parâmetros a serem analisados aqui é o quanto a linha de AM é alterada de acordo com a informação adquirida no procedimento anterior, testamos novas possibilidades para analisar melhor os modelos treinados e ensaiar formas de como aprimorar os mesmos. 
+
+É importante destacar que, antes de começar a frase, deve-se estabelecer quais serão as definições de um bom modelo, pois elas guiarão o aprimoramento dele. Afinal, os ajustes e melhorias que serão feitos dependem da base de dados, do modelo e do treinamento. Considerando tudo isso, o processo de AM deve ser continuado apenas quando o aprimoramento dos parâmetros for alcançado. Neste ponto iremos testa aumentar o numero de itens da amostra e treinar descritores novos ou separados buscando aperfeiçoar nossos modelos e adquirir uma acurácia melhor.
+
+\section{Predição}
+
+Como nossa tarefa inicial era classificação, desejamos ao final mesma utilizar os modelos treinados com essa base para predizer a classificação de um galaxia. O objetivo é encontrar uma função a partir dos dados de treinamento que possa classificar um objeto novo e desconhecido na classes que treinamos ou seja desejamos rotular ou dar uma “classe” a um padrão. Na predição ou classificação, baseado em dados de imagens de galaxias, um novo padrão poderia ser classificado em duas possíveis classes, “espital” ou “elíptica”. Também se diz que os métodos de AM dessa natureza seguem o paradigma supervisionado, pois é necessário apresentar ao método uma série de dados já rotulados para que o método possa aprender.
+

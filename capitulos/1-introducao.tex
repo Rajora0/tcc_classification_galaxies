@@ -1,0 +1,231 @@
+\chapter{Introdução} 
+
+Na astrofísica moderna a abordagem de processos de otimização computacional é amplamente empregada, o presente trabalho visa a aplicação de ferramentas de otimização na classificação de galáxias, num contexto onde são utilizados métodos de aprendizado de máquina (AM).  
+
+É importante conhecer o cenário onde a quantidade de informações a serem analisadas cresce diariamente do ponto de vista observacional astronômico, onde os métodos de análise mais indicado quando se trata desta quantidade massiva de dados é uma análise computacional. Praticamente toda analise de grande porte necessita de alguma técnica computacional. 
+
+O nosso problema será a clássica análise de repositórios de imagens astronômicas. Onde desejamos classificar objetos extensos no céu, especificamente galáxias. Vamos empregar técnicas de AM, em conjunto com visão computacional, para tornar possível a uma classificação automática destes objetos quando apresentar um novo conjunto de dados desconhecidos. 
+
+Na introdução abordaremos conceitos históricos sobre classificação de galáxias, métodos gerais de classificação com AM e uma introdução dos conceitos de visão computacional. 
+
+\section{Galáxias} 
+
+No século XVII vários astrônomos já haviam observado, entre as estrelas, a presença de corpos extensos e difusos, que foram chamados inicialmente de "nebulosas", sabemos que diferentes tipos de objetos estavam agrupados com esta terminologia, a maioria  deles pertencendo à nossa própria galáxia, dentre eles estavam nuvens de gás iluminadas por estrelas, cascas de gás ejetadas por estrelas em estágio final de evolução estelar, aglomerados de estrelas e outros objetos, mas algumas dessas nebulosas eram galáxias individuais, como a nossa Via Láctea. 
+
+\begin{figure}[ht!] 
+\centering 
+\includegraphics[width=15cm]{imagens/xlarge_web.jpg} 
+\caption{Imagem da Via Láctea. Crédito: NASA, ESA e Z. Levay (STScI/AURA)} 
+\label{fig:ViaLactea} 
+\end{figure} 
+
+O grande filósofo alemão Immanuel Kant (1724-1804), foi influenciado pelo astrônomo Thomas Wright (1711-1786) e propôs por volta de 1755, que algumas nebulosas poderiam ser sistemas estelares totalmente comparáveis à nossa galáxia. Kant comparou o sistema estelar em que vivemos com outros objetos observados similares e afirmou que apresentavam concordância com o conceito de que esses objetos elípticos são simplesmente universos ilhas, sendo assim outras "Vias Lácteas", a ideia ficou conhecia como a "hipótese dos universos-ilha", as especulações cosmológicas de Kant não foram bem aceitas, de forma que assunto permaneceu controverso na época. 
+
+Até os anos 1900 cerca de 15000 nebulosas haviam sido catalogadas e descritas, sendo algumas identificadas corretamente como aglomerados estelares, e outras como nebulosas gasosas, o maior problema se tratava da distância que não era conhecida, assim não era possível saber se objeto estava contido na nossa galáxia ou fora dela, isso era o que impossibilitava explicar a maior parte dos objetos. 
+
+Alguns dos maiores protagonistas nessa controvérsia foram Harlow Shapley (1885-1972), do observatório Mount Wilson Observatory, e Heber Doust Curtis (1872-1942), do observatório Lick Observatory. Shapley defendia que as nebulosas espirais eram objetos da nossa Galáxia, e Curtis defendia a ideia oposta, de que eram objetos extragalácticos, essa discussão culminou num famoso debate em abril de 1920, frente à Academia Nacional de Ciências. 
+
+O debate terminou inconclusivo devido à dificuldade de se medir as grandes distâncias em Astronomia, mas no final de 1923, o mistério foi resolvido por Edwin Powell Hubble (1889-1953), que estimou a distância até a nebulosa de Andrômeda (M31), demonstrando que a mesma estava fora da Via Láctea. Utilizando a calibração das estrelas variáveis Cefeídas, ideia proposta por Henrietta Leavitt e sugerida para medir distâncias até as nebulosas por Harlow Shapley, Hubble fundou uma nova área do conhecimento, que foi chamada Astronomia Extragaláctica. 
+
+\begin{figure}[ht!] 
+\centering 
+\includegraphics[width=14cm]{imagens/800px-Andromeda_Galaxy_(with_h-alpha).jpg} 
+\caption{A galáxia de Andrômeda é uma galáxia espiral a aproximadamente 2,5 milhões de anos-luz de distância na constelação de Andrômeda. A imagem também mostra Messier 32 e 110, bem como o NGC 206 (uma nuvem de estrelas brilhantes na galáxia de Andrômeda) e a estrela Nu Andrômeda. Crédito: Adam Evans.} 
+\label{fig:Andrômeda} 
+\end{figure} 
+
+A cosmologia observacional dava seus primeiros passos, por volta de 1920-1930, utilizando medidas de velocidade e distância, para uma amostra de vinte e duas nebulosas (galáxias), Hubble descobriu a expansão do Universo. 
+
+\subsection{Classificação de Galáxias e Sequência de Hubble} 
+
+Em geral galáxias diferem bastante entre si, mas na maioria delas observamos uma regularidade, quando observadas em projeção contra o céu, se enquadram em duas classes básicas: espirais e elípticas.  
+
+Galáxias que não apresentam forma definida são chamadas de irregulares \cite{extragalatic}. Sabemos que as galáxias nascem nas regiões de maior condensação da matéria escura, assim existe uma certa distribuição destas condensações que é aleatória.  
+
+Ressaltamos dois aspectos na formação das galáxias a simetria e a assimetria, no caso de uma distribuição simétrica, não haverá momentum angular líquido, e temos a formação de uma galáxia elíptica, na distribuição assimétrica as condensações em uma região do espaço produzem força de maré que gera momentum angular na nuvem, o que forma uma galáxia espiral. 
+
+O esquema mais utilizado para classificação é a sequência de Hubble \cite{bergh1998galaxy}. Quando o esquema foi concebido pensava-se que o mesmo poderia fornecer informações sobre a evolução das galáxias \cite{1926CMWCI.324....1H}. 
+
+\begin{figure}[ht!] 
+\centering 
+\includegraphics[width=15cm]{imagens/The-Hubble-tuning-fork-diagram.png} 
+\caption{Tipos de galáxia de acordo com o esquema de classificação de Hubble. A letra E representa galáxia elíptica, a letra S uma galáxia espiral e as letras SB representam uma galáxia espiral barrada. Crédito: Wikipédia/Domínio Público.} 
+\label{fig:ClassificaçãodeHubble} 
+\end{figure} 
+
+\subsection{Galáxias Elípticas} 
+
+As galáxias elípticas são um tipo de galáxia, que apresenta uma forma aproximada a uma elipsoide \cite{extragalatic}. Estão distribuídas mais igualmente entre as três dimensões do espaço. As estrelas possuem órbitas aleatórias o que se assemelha com as órbitas planares. A maioria apresenta pouco gás, pouca poeira e poucas estrelas jovens, as galáxias elípticas parecem muito com o núcleo e halo das galáxias espirais. 
+
+A divisão Hubble das galáxias elípticas levou em conta o achatamento do núcleo. As classes vão de E0 a E7 de acordo com o seu grau de achatamento. As galáxias E0 apresentam forma circular vistas de frente. Conforme achatamos esse círculo de modo gradativo para uma elipse representamos a sequência de E0 a E7 \cite{bergh1998galaxy}. Essa classificação leva em conta a aparência da galáxia, não na sua verdadeira forma. Uma galáxia E0 pode ser elíptica realmente esférica tanto quanto pode ser uma elíptica mais achatada vista de frente, já uma E7 tem que ser uma elíptica achatada vista de perfil, mas nenhuma elíptica vai parecer tão achatada quanto uma espiral vista de perfil. 
+\begin{figure}[ht!] 
+\centering 
+\subfigure[ref1][M89 (NGC 4552))]{\includegraphics[width=5cm]{imagens/m89.jpg}}
+\qquad 
+\subfigure[ref2][M110 (NGC 205)]{\includegraphics[width=5cm]{imagens/m110.jpg}} 
+\caption{(a) M89 (NGC 4552). Galáxia elíptica do tipo E0, a 60 milhões de anos-luz da Terra, na constelação de Virgem. Magnitude aparente de 9.8. Pertencente ao enxame de galáxias de Virgem, foi descoberto por Charles Messier em 1781. Crédito: NOAO/AURA/NSF. \newline  (b) M110 (NGC 205) Galáxia elíptica do tipo E6, a 2.9 milhões de anos-luz da Terra, na constelação de Andrómeda. Magnitude aparente de 8.5. É a segunda companheira de M31, em conjunto com M32. Foi descoberto em 1773 por Charles Messier. Crédito: NOAO/AURA/NSF.} 
+\label{fig:galáxiasElipticas} 
+\end{figure} 
+
+As galáxias elípticas são quase um terço de todas as galáxias \cite{extragalatic}. Têm dimensões variadas que vão desde galáxias anãs, até galáxias gigantes. As maiores podem ter até 10 trilhões de massas solares e cerca de milhões anos-luz de diâmetro. Sendo as mais comuns galáxias elípticas anãs que contêm poucos milhões de massas solares e apenas cerca de alguns mil anos-luz de diâmetro. A Galáxia de Andrômeda (M31), tem duas companheiras que são galáxias elípticas anãs. 
+
+\begin{figure}[ht!]
+\centering 
+\subfigure[ref1][M87 (NGC 4486)]{\includegraphics[width=5cm]{imagens/m87.jpg}} 
+\qquad 
+\subfigure[ref2][M60 (NGC 4649)]{\includegraphics[width=5cm]{imagens/m60.jpg}} 
+\caption{(a) M87 também chamada de Virgo A ou NGC 4486 é uma galáxia elíptica supergigante localizada na constelação de Virgem, uma das mais massivas do Universo local. Ela possui uma grande população de aglomerados globulares e um distinto jato de plasma energético que se origina em seu núcleo e estende-se por pelo menos 4,9 mil anos-luz, viajando em uma velocidade relativista. Magnitude aparente 7.19. Messier 87 também é um dos pontos de rádio mais brilhantes no céu e um alvo popular para astrônomos. Crédito: Hubble. \newline  (b) M60 (NGC 4649). Galáxia elíptica do tipo E2, com aproximadamente 120.000 anos-luz de diâmetro, encontra-se na constelação de Virgo sendo o terceiro objeto mais brilhante do aglomerado de Virgem. Crédito: HUBBLE.} 
+\label{fig:galáxiasElipticas2} 
+\end{figure} 
+
+\subsection{Galáxias Espirais} 
+
+As galáxias espirais são galáxias que quando vistas de frente, apresentam uma clara estrutura espiral. Possuem um núcleo em forma de disco e braços espirais, elas apresentam diferenças entre si principalmente quanto ao tamanho do núcleo e ao grau de desenvolvimento dos braços espirais\cite{extragalatic}.  
+
+A formação estelar e composta por estrelas jovens e velhas, sugerindo que não se formaram a partir de outra galáxia mais antiga. O núcleo é formado predominantemente por estrelas mais velhas e seus braços apresentam uma maior atividade de formação estelar. Os núcleos das galáxias espirais têm uma tonalidade mais laranja e os braços uma tonalidade mais azul, fatores importantes para classificação. 
+
+As galáxias espirais tem diâmetros que variam de 20 mil até mais de 100 mil anos-luz e suas massas variam de 10 bilhões até 10 trilhões de vezes a massa do Sol. Nossa Via-Láctea, é uma galáxia espiral grande e massiva. 
+
+São divididas nas categorias S não barradas e SB barradas. As S também se subdividem nas categorias Sa, Sb, e Sc, levando em conta o grau de desenvolvimento, enrolamento dos braços espirais, tamanho do núcleo comparado com relação ao disco. 
+
+As galáxias do tipo Sa têm núcleo maior, braços pequenos e bem enrolados, as Sb tem núcleo e braços intermediários, as Sc tem núcleo menor, braços grandes e mais abertos.  
+
+\begin{figure}[ht!] 
+\centering 
+\subfigure[ref1][M96 (NGC 3368)]{\includegraphics[width=4cm]{imagens/m96.jpg}} 
+\qquad 
+\subfigure[ref2][M63 (NGC 5055)]{\includegraphics[width=4cm]{imagens/m63.jpg}} 
+\qquad 
+\subfigure[ref2][M64 (NGC 628)]{\includegraphics[width=4cm]{imagens/m74.jpg}} 
+\caption{(a) M96 (NGC 3368). Galáxia espiral do tipo Sa, a 38 milhões de anos-luz da Terra, na constelação de Leão. Magnitude de 9.2. É o membro mais brilhante do grupo de galáxias M96, também conhecido por grupo Leo I. Crédito: Adam Block /NOAO/AURA/NSF,\newline (b) M63 (Galáxia do Girassol ou NGC 5055). Galáxia espiral do tipo Sb, a 37 milhões de anos-luz da Terra, na constelação de Cães de Caça. Magnitude aparente de 8.6. Ao que parece forma um grupo físico com a galáxia do Cata-vento e outras mais pequenas: o grupo M51. Crédito: Bruce Hugo e Leslie Paul/Adam Block/NOAO/AURA/NSF,\newline (c) M64 (NGC 628). Galáxia espiral do tipo Sc, a 35 milhões de anos-luz da Terra, na constelação de Peixes. Magnitude de 9.4. Aclamada por muitos como a "galáxia espiral perfeita". Crédito: Observatório Gemini, Equipa GMOS} 
+\label{fig:galáxiasElipticas3} 
+\end{figure} 
+
+Algumas galáxias que têm núcleo, disco e halo, mas não têm traços de estrutura espiral, são classificadas como S0 na sequência Hubble, chamadas de lenticulares, na maior parte galáxias relativamente isoladas no universo que não tiveram interações gravitacionais próximas por um período muito longo de tempo. São dificilmente distinguíveis das galáxias elípticas devido à sua aparência e classificadas incorretamente no passado. As galáxias espirais e lenticulares juntas são chamadas de galáxias discoidais. 
+
+\begin{figure}[ht!] 
+\centering 
+\subfigure[ref1][M61 (NGC 4303)]{\includegraphics[width=5cm]{imagens/m61.jpg}} 
+\qquad 
+\subfigure[ref2][M102 (NGC 5866)]{\includegraphics[width=5cm]{imagens/NGC5866.png}} 
+\caption{(a)M61 (NGC 4303). Galáxia do tipo S0, chamada de Messier 61 , pertencem a um grupo de galáxias conhecido como Superaglomerado Virgo na constelação de Virgem (A Virgem) - um grupo de aglomerados de galáxias que contêm até 2000 galáxias espirais e elípticas no total. O Messier 61 é um tipo de galáxia conhecida como galáxia de explosão estelar. Magnitude de 10.18 . Crédito: ESA / Hubble e NASA. Agradecimento: Det58.\newline (b) M102 (NGC 5866). Galáxia do tipo S0. É uma galáxia lenticular localizada a cerca de quarenta milhões de anos-luz (aproximadamente 12.26 megaparsecs) de distância na direção da constelação do Dragão. Magnitude aparente de 9.9. Existe a possibilidade de Messier 102 ser uma duplicata de Messier 101. Crédito: NASA, ESA, e The Hubble Heritage Team (STScI/AURA)} 
+\label{fig:galáxiasElipticas4} 
+\end{figure} 
+
+Existem ainda outras classificações que se ramificam da sequência de Hubble \cite{bergh1998galaxy}, o sistema de Vaucouleurs \cite{1959HDP....53..275D} é um bom exemplo. Dentro deste sistema as galáxias lenticulares também são classificadas como não barradas (SA0) ou barradas (SB0), com a notação S0 reservada para as galáxias para as quais é impossível saber se uma barra está presente ou não.  
+
+É importante observar que mais da metade das galáxias discoidais apresentam uma barra atravessando o núcleo e são chamadas barradas, na classificação de Hubble identificadas pelas iniciais SB. As barradas também se subdividem nas categorias SB0, SBa, SBb, e SBc.  
+
+\begin{figure}[ht!] 
+\centering 
+\subfigure[ref1][NGC 1433]{\includegraphics[width=4cm]{imagens/ngc1433.jpg}} 
+\qquad 
+\subfigure[ref2][NGC 1365]{\includegraphics[width=4cm]{imagens/ngc_1365.jpg}} 
+\qquad 
+\subfigure[ref3][M109 (NGC 3992)]{\includegraphics[width=4cm]{imagens/m109.jpg}} 
+\caption{(a) NGC 1433. Galáxia do tipo SBa. A cerca de 32 milhões de anos-luz da Terra, é um tipo de galáxia muito ativa conhecida como galáxia Seifert - uma classificação que representa 10\% de todas as galáxias. Eles têm centros luminosos e muito brilhantes, comparáveis aos da nossa galáxia, a Via Láctea. Magnitude de 9.99. Crédito: ESA/Hubble. \newline (b) NGC 1365. Galáxia espiral-barrada do tipo SBb, a 60 milhões de anos-luz da Terra, na constelação da Fornalha. Magnitude de 9.5. É uma galáxia gigante com cerca de 200,000 anos-luz de diâmetro, ou seja, duas vezes o tamanho da Via Láctea. Crédito: FORS Team, VLT, ESO. \newline (c) M109 (NGC 3992). Galáxia espiral-barrada do tipo SBc, a 55 milhões de anos-luz da Terra, na constelação de Ursa Maior. Magnitude de 9.8. Crédito: Chris Lasley e Ray Galak} 
+\label{fig:galáxias5} 
+\end{figure} 
+
+Nas espirais barradas, os braços normalmente partem das extremidades da barra. O fenômeno de formação da barra ainda não é bem compreendido, mas acredita-se que a barra seja a resposta do sistema a um tipo de perturbação gravitacional periódica (como uma galáxia companheira), ou simplesmente a consequência de uma assimetria na distribuição de massa no disco da galáxia \cite{bergh1998galaxy}. Alguns astrônomos também acreditam que a barra seja pelo menos em parte responsável pela formação da estrutura espiral, assim como por outros fenômenos evolutivos em galáxias. Nosso interesse não será classificar as galáxias com tamanha precisão, mas seria um trabalho relativamente possível com os métodos que serão aplicados. 
+
+\subsection{Galáxias Irregulares} 
+
+As galáxias irregulares são galáxias que apresentam uma estrutura morfológica desordenada, não possuem formas elípticas ou espirais \cite{bergh1998galaxy}. De modo que sua forma é indefinida. O tipo mais geral apresenta uma grande quantidade de estrelas recém-nascidas e uma produção de novas estrelas com uma certa intensidade. Hubble as classificou como galáxias irregulares devido à falta de qualquer simetria circular ou rotacional \cite{bergh1998galaxy}. Sua aparência sendo dominada por estrelas jovens brilhantes e nuvens de gás ionizado distribuídas irregularmente\cite{extragalatic}. Lembram as espirais no seu conteúdo estelar, que inclui estrelas de população jovens e velhas. 
+
+As mais conhecidas são a Grande e a Pequena Nuvens de Magalhães, galáxias vizinhas da Via Láctea, visíveis a olho nu no Hemisfério Sul, foram identificadas pelo navegador português Fernão de Magalhães (1480-1521), em 1519.  
+
+\begin{figure}[ht!] 
+\centering 
+\includegraphics[width=12cm]{imagens/pequena_nuvem_magalhaes.jpg} 
+\caption{A Pequena Nuvem de Magalhães é também conhecida como NGC 292. É uma galáxia anã irregular, em órbita da Via Láctea. Contém mais de 30 mil milhões de estrelas. A uma distância de 200 000 anos-luz, é uma das vizinhas mais próximas da nossa Galáxia. Situada na constelação do Tucano, é melhor visível no Hemisfério Sul. Forma um par com a Grande Nuvem de Magalhães Crédito: Observatório da Namíbia.}
+\label{fig:PequenaNuvendeMagalhães} 
+\end{figure} 
+
+A Grande Nuvem de Magalhães orbita a Via Láctea, com velocidade de 387 km/s, o seu diâmetro é vinte vezes menor do que o da Via Láctea e o seu número de estrelas dez vezes menor. Sua morfologia é irregular, mas apresenta traços de uma estrutura espiralada. Sua constituição e compota de moléculas orgânicas complexas, como metanol, éter. 
+
+Existe a especulação de que a Grande Nuvem de Magalhães já foi uma galáxia espiral barrada que rompeu da Via Láctea para tornar-se uma galáxia irregular. 
+
+\section{Visão Computacional (VC)}\label{vc} 
+
+O conceito de VC é muito amplo, mas geralmente se trata da extração de características presentes em imagens. Descrever características visuais possibilita compreendê-las computacionalmente e expande as possibilidades de aplicações possíveis. O objetivo básico é fornecer aos computadores recursos visuais semelhantes ao dos humanos de modo que as máquinas possam reconhecer determinado ambiente ou padrão. 
+
+Dentro do AM utilizamos recursos de VC para as mais diversas aplicações, usando detectores de características visuais podemos coletar os padrões desejados para o aprendizado. A utilização de descritores de características tem como objetivo identificar um conjunto de pontos de interesse a partir do processo de varredura e identificação de pixels de interesse de determinada imagem, assim sendo cada método de detecção apresenta um algoritmo próprio, realizando a detecção de diferentes formas. 
+
+Devido a isso, é possível analisar um determinado problema e suas particularidades, e consequentemente determinar quais algoritmos são mais indicados para a utilização \cite{Sonka1998}. Não existe uma regra geral para essa escolha devemos conhecer bem o conjunto de dados e testar. 
+
+\subsection{Histogram of Oriented Gradients (HOG)} 
+
+O HOG ou histograma de gradientes orientados é um descritor que usa o processamento de imagens para reconhecimento de padrões. A técnica conta ocorrências de orientação de gradientes em partes localizadas na imagem. 
+
+A ideia geral por traz do HOG é que a aparência e a forma do objeto local dentro de uma imagem podem ser descritas pela distribuição de gradientes de intensidade ou direções das arestas. Dividindo a imagem em pequenas regiões conectadas chamadas células. E para cada célula um histograma de direções e criado. Assim pôr fim concatenamos estes histogramas para gerar o descritor. 
+
+\subsection{Hu Moments (HM)} 
+
+O HM ou momentos invariantes é um descritor que extrai contornos de um objeto em uma imagem, ao descrever a contorno de um objeto, podemos extrair um vetor de recurso de sua forma ou uma lista de números para representar a forma do objeto. Após extraído esta descrição podemos então comparar dois vetores de recurso usando uma métrica de similaridade ou uma função de distância para determinar quão "semelhantes" são as formas. 
+
+Os momentos invariantes podem ser determinados por uma média ponderada das intensidades dos pixels da imagem, ou uma função desses momentos, geralmente escolhidos para ter alguma propriedade ou característica desejada, são úteis para descrever objetos após a uma segmentação. 
+
+\section{Machine Learning (ML)}\label{ml} 
+
+O termo machine learning ou aprendizado de máquina foi criado por volta 1959 pelo pioneiro da inteligência artificial, Arthur Samuel \cite{150082}, engenheiro do MIT, uma descrição básica naquela época era de um campo de estudo que dá aos computadores a habilidade de aprender sem terem sido programados para tal. 
+
+O ML nos remete a ideia de máquinas e sistemas capazes de adquirir novos conhecimentos por conta própria, mas no geral ML são técnicas computacionais que nos permitem encontrar automaticamente padrões complexos e potencialmente úteis nos dados em geral, esses padrões são condensados em um modelo que pode ser usado em novos conjuntos de dados, um processo chamado de fazer predições ou realizar inferência. 
+
+A operação básica desses algoritmos leva em conta uma construção de predição com análise dos dados ao invés de seguir instruções estáticas pré-programadas \cite{astroml}, diferente dos processos de inteligência artificial temos, aqui o aprendizado é essencialmente a fragmentação de um sistema para promover compreensão ou seja simplesmente procuramos padrões para promover comparações tendo em vista os dados, este aprendizado é o indutivo, o que significa que ele extrair regras e padrões de grandes conjuntos de dados. 
+
+A construção de um modelo de AM é um processo desenvolvido em várias etapas, cada etapa apresenta os próprios desafios técnicos e conceituais \cite{astroml}. O tamanho dos conjuntos de dados de treinamento para modelos de AM reais pode alcançar ou ultrapassar facilmente a marca dos terabytes (TB).  
+
+Por isso necessariamente precisamos de estruturas de processamento de dados em grande escala para esses conjuntos de dados de maneira eficiente e distribuída. Além disso, quando usamos um modelo de AM para fazer predições, é necessário aplicar as mesmas transformações usadas para os dados de treinamento nos novos conjuntos de dados, de modo que o conjunto de dados ativo seja apresentado ao modelo de AM da maneira esperada pelo modelo. 
+
+\subsection{Modelos de Aprendizado de Máquina} 
+
+Os modelos são especificações matemáticas ou probabilística aplicadas ao AM \cite{datascience}, e são essencialmente à criação e ao uso de modelos que aprendem a partir dos dados. Os modelos utilizados estão distribuídos nos seguintes grupos: métodos distância, métodos otimização, métodos probabilísticos e métodos de procura. Vamos trabalhar com alguns destes métodos, essencialmente a aplicação deles como técnicas de classificação que é o nosso interesse. 
+
+\subsection{Naive Bayes (NB)} 
+
+O classificador Naive Bayes é baseado no teorema de Bayes sendo um assim um classificador probabilístico simples \cite{datascience}. Chamado de método ingênuo de Bayes formando um conjunto de algoritmos de aprendizado supervisionado baseados na aplicação do teorema de Bayes com independência condicional entre cada par de recursos, dado o valor da variável de classe. 
+
+O NB pode executar a classificação de um número arbitrário de variáveis independentes e geralmente é usado quando os dados têm muitos atributos. Os dados a serem classificados podem ser categóricos. Uma pequena quantidade de dados de treinamento é suficiente para estimar os parâmetros necessários.  
+
+\subsection{Logistic Regression (LR)} 
+
+A LR ou regressão logística é basicamente um modelo linear para classificação, também conhecida como regressão “logit”, classificação de entropia máxima ou classificador log-linear \cite{datascience}. A ideia deste modelo é que as probabilidades que descrevem os possíveis resultados são modeladas usando uma função logística, que podemos compreender como uma curva em formato de sigmoide regida pela equação de uma regressão logística.  
+
+\subsection{Linear Discriminant Analysis (LDA)} 
+
+O LDA ou analise de discriminante linear é uma generalização do discriminante linear de Fisher que é um método utilizado em estatística para encontrar combinações lineares de recursos que caracterizam ou separam classes, objetos ou eventos.  
+
+A combinação resultante pode ser usada como um classificador linear ou para redução de dimensionalidade antes de uma classificação. Um classificador LDA tenta encontrar um limite linear que melhor separe as diferentes classes nos dados \cite{scikit-learn}.  
+
+\subsection{K-Nearest Neighbors (K-NN)} 
+
+O K-NN ou algoritmo dos K-vizinhos mais próximo é método baseado em distância. Dentre os algoritmos de ML o K-NN é o mais simples de todos \cite{datascience}. A intuição por trás do algoritmo é de que objetos próximos ou relacionados a um mesmo conceito são semelhantes entre si. 
+
+O algoritmo do K-NN classifica um novo objeto com base nos exemplos do conjunto de treinamento que são próximos a ele. É um algoritmo  \textit(lazy), por não aprender um modelo compacto para os dados,  ele apenas memoriza os objetos já treinados. Uma das vantagens desse algoritmo é que ele pode ser utilizado tanto para problemas de classificação como para problemas de regressão de maneira direta.  
+
+\subsection{Support Vector Machine (SVM)} 
+
+As SVM ou máquina de vetores de suporte são um método de otimização, estas técnicas são eficazes para discriminar classes binária. A formulação básica é projetada para o problema de classificação linear, o algoritmo produz um hiperplano ideal, aquele que mantém a maior distância mínima de todos os dados de treinamento, sendo definida como a margem para separar entidades de diferentes classes. 
+
+Por exemplo, se as duas classes pertencem a planetas habitáveis e não habitáveis, respectivamente, o problema é um problema de classificação binária e o hiperplano deve manter a maior distância possível dos pontos de dados de qualquer classe.  
+
+\subsection{Decision Tree (DT)} 
+
+O DT ou árvore de decisão é um método de procura onde existe uma construção logica de uma estrutura de dados em árvore que pode ser usada para classificação ou regressão. Cada um dos nós na árvore divide o conjunto de treinamento com base em um recurso, o primeiro nó é chamado nó raiz, que é baseado no recurso considerando o melhor preditor. Todos os outros nós da árvore são divididos em nós filhos com base em um certo critério de divisão ou regra de decisão que determina a fidelidade do objeto (dados) em particular à classe de recurso.  
+
+Diz-se que um nó é mais puro se a probabilidade de classificar um determinado vetor de característica pertencente à classe $a_i$ em comparação com qualquer outra classe $a_j$, pois $i \not= j$ é maior \cite{scikit-learn}. Os nós devem ser nós puros, isto é, sempre que qualquer amostra de dados a ser classificada atingir um nó, ela deve ser classificada em uma das classes de dados com uma precisão muito alta.  
+
+\subsection{Randon Forest (RF)} 
+
+O RF ou floresta aleatória é um conjunto de várias árvores de decisão. Cada árvore é construída selecionando um subconjunto aleatório de atributos do conjunto de dados \cite{scikit-learn}. Cada árvore, por sua vez, realiza uma regressão ou uma classificação e uma decisão é tomada com base na previsão média (regressão) ou votação por maioria (classificação).  
+
+A tarefa de classificar um novo objeto do conjunto de dados é realizada usando árvores construídas aleatoriamente.  Por exemplo, se uma floresta aleatória consiste em dez árvores de decisão, das quais seis classificam um vetor de característica como pertencente à uma classe \textit{a}  e as quatro árvores restantes classificam outra classe \textit{b}, então podemos concluir que o RF classificou o vetor como sendo da classe \textit{a}.  
+
+\subsection{Multilayer Perceptron (MLP)} 
+
+Um MLP ou perceptron multicamada é uma classe de rede neural artificial. O termo MLP é uma rede composta por múltiplas camadas. As multicamadas perceptrons são algumas vezes chamadas como redes neurais. Um MLP básico consiste em pelo menos três camadas de nós: uma camada de entrada, uma camada oculta e uma camada de saída. Após os nós de entrada, cada nó é um neurônio que usa uma função de ativação não linear. O MLP utiliza uma técnica de aprendizado supervisionado chamada "backpropagation" para o treinamento \cite{astroml}.  
+
+A nossa utilização do MLP se restringira a classificação, onde implementamos um algoritmo perceptron de várias camadas que treina usando a retro propagação, basicamente treinamos duas matrizes, que mantém as amostras de treinamento representadas como vetores de recurso e matriz de tamanho, que mantém os valores de destino (rótulos de classe) para as amostras de treinamento.  
+
+Após o treinamento, o modelo pode prever rótulos para novas amostras, ajustando um modelo não linear aos dados de treinamento que contém as matrizes de peso que constituem os parâmetros do modelo. Destas matrizes podemos criar o modelo capaz de discernir se um novo objeto (matriz) e de uma determinada classe ou de outra classe. 
